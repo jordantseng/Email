@@ -40,7 +40,7 @@ class App extends Component {
         <Switch>
           <Route
             path="/signup"
-            component={(routeProps) => {
+            render={(routeProps) => {
               return (
                 <Signup {...routeProps} authenticate={this.authenticate} />
               );

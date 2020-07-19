@@ -20,7 +20,7 @@ const Inbox = ({ user }) => {
             <Route exact path="/inbox" component={InboxPlaceholder} />
             <Route
               path="/inbox/:id"
-              render={(routeProps) => <InboxShow {...routeProps} user={user} />}
+              render={(routeProps) => <InboxShow {...routeProps} />}
             />
           </Switch>
         </div>

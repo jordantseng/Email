@@ -56,7 +56,7 @@ class InboxShow extends Component {
             </div>
           </div>
           <div>
-            <InboxReply user={this.props.user} email={email} />
+            <InboxReply email={email} />
           </div>
         </div>
         <div className="ui divider content"></div>
