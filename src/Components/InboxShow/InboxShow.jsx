@@ -1,69 +1,54 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import emailService from '../../apis/email';
 import InboxReply from '../InboxReply/InboxReply';
 import Loader from '../Shared/Loader/Loader';
 import '../InboxShow/InboxShow.css';
 
-class InboxShow extends Component {
-  state = {
-    email: {
-      subject: '',
-      from: '',
-      to: '',
-      text: '',
-      html: '',
-    },
-  };
-  isLoading = true;
+const InboxShow = ({ match }) => {
+  const [loading, setLoading] = useState(true);
+  const [email, setEmail] = useState({
+    subject: '',
+    from: '',
+    to: '',
+    text: '',
+    html: '',
+  });
 
-  async componentDidMount() {
-    this.fetchEmail();
+  useEffect(() => {
+    setLoading(true);
+    (async () => {
+      const { data } = await emailService.get(`/emails/${match.params.id}`);
+      const { subject, from, to, html, text } = data;
+      setLoading(false);
+
+      setEmail({ subject, from, to, html, text });
+    })();
+  }, [match.params.id]);
+
+  if (loading) {
+    return <Loader />;
   }
-
-  async componentDidUpdate(prevProps) {
-    this.isLoading = true;
-    if (prevProps.location.pathname !== this.props.location.pathname) {
-      this.fetchEmail();
-    }
-  }
-
-  async fetchEmail() {
-    const { data } = await emailService.get(
-      `/emails/${this.props.match.params.id}`
-    );
-    const { subject, from, to, html, text } = data;
-    this.isLoading = false;
-    this.setState({ email: { subject, from, to, html, text } });
-  }
-
-  render() {
-    const { email } = this.state;
-
-    if (this.isLoading) {
-      return <Loader />;
-    }
-    return (
-      <div>
-        <div className="header">
+  return (
+    <div>
+      <div className="header">
+        <div>
+          <h3>{email.subject}</h3>
           <div>
-            <h3>{email.subject}</h3>
-            <div>
-              From: <i>{email.from}</i>
-            </div>
-            <div>
-              To: <i>{email.to}</i>
-            </div>
+            From: <i>{email.from}</i>
           </div>
           <div>
-            <InboxReply email={email} />
+            To: <i>{email.to}</i>
           </div>
         </div>
-        <div className="ui divider content"></div>
-        <div dangerouslySetInnerHTML={{ __html: email.html }}></div>
+        <div>
+          <InboxReply email={email} />
+        </div>
       </div>
-    );
-  }
-}
+      <div className="ui divider content"></div>
+      <div dangerouslySetInnerHTML={{ __html: email.html }}></div>
+    </div>
+  );
+};
 
 export default InboxShow;

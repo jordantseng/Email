@@ -3,16 +3,14 @@ import { useEffect } from 'react';
 
 import authService from '../../apis/auth';
 
-const Signout = (props) => {
+const Signout = ({ signout, history }) => {
   useEffect(() => {
-    async function signout() {
+    (async () => {
       await authService.post('/auth/signout', {});
-      props.signout();
-      props.history.push('/');
-    }
-
-    signout();
-  }, [props]);
+      signout();
+      history.push('/');
+    })();
+  }, [signout, history]);
 
   return <div>Signing out...</div>;
 };

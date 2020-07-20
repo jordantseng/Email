@@ -7,6 +7,7 @@ import InboxCreate from '../../Components/InboxCreate/InboxCreate';
 import InboxPlaceholder from '../../Components/InboxPlaceholder/InboxPlaceholder';
 
 const Inbox = ({ user }) => {
+  
   return (
     <div>
       <div className="ui grid stackable">
