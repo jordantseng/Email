@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 
 import AuthService from '../apis/auth';
+
 import NavBar from './NavBar/NavBar';
 import Signin from '../Pages/Signin/Signin';
 import Signup from '../Pages/Signup/Signup';
@@ -11,7 +17,7 @@ import NotFound from '../Pages/NotFound/NotFound';
 
 class App extends Component {
   state = {
-    user: { username: '', authenticated: false },
+    user: { username: '', authenticated: null },
   };
 
   async componentDidMount() {
@@ -36,41 +42,42 @@ class App extends Component {
 
     return (
       <div className="ui container">
-        <NavBar user={user} />
-        <Switch>
-          <Route
-            path="/signup"
-            render={(routeProps) => {
-              return (
+        <Router>
+          <NavBar user={user} />
+          <Switch>
+            <Route
+              path="/signup"
+              render={(routeProps) => (
                 <Signup {...routeProps} authenticate={this.authenticate} />
-              );
-            }}
-          />
-          <Route
-            path="/signout"
-            render={(routeProps) => (
-              <Signout {...routeProps} signout={this.signout} />
-            )}
-          />
-          <Route
-            path="/inbox"
-            render={(routeProps) => {
-              if (!user.authenticated) {
-                return routeProps.history.push('/');
+              )}
+            />
+            <Route
+              path="/signout"
+              render={(routeProps) => (
+                <Signout {...routeProps} signout={this.signout} />
+              )}
+            />
+            <Route
+              path="/inbox"
+              render={(routeProps) =>
+                !user.authenticated ? (
+                  <Redirect to="/" />
+                ) : (
+                  <Inbox {...routeProps} user={user} />
+                )
               }
-              return <Inbox {...routeProps} user={user} />;
-            }}
-          />
-          <Route path="/not-found" component={NotFound} />
-          <Route
-            exact
-            path="/"
-            render={(routeProps) => (
-              <Signin {...routeProps} authenticate={this.authenticate} />
-            )}
-          />
-          <Redirect to="not-found" />
-        </Switch>
+            />
+            <Route path="/not-found" component={NotFound} />
+            <Route
+              exact
+              path="/"
+              render={(routeProps) => (
+                <Signin {...routeProps} authenticate={this.authenticate} />
+              )}
+            />
+            <Redirect to="not-found" />
+          </Switch>
+        </Router>
       </div>
     );
   }
