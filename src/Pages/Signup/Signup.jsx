@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
+
+import { UserContext } from '../../Context/UserContext';
 
 import authService from '../../apis/auth';
 import Input from '../../Components/Shared/Input/Input';
@@ -45,7 +47,9 @@ const validationSchema = yup.object({
     .oneOf([yup.ref('password')], 'Passwords must match'),
 });
 
-const Signup = ({ authenticate, history }) => {
+const Signup = ({ history }) => {
+  const { authenticate } = useContext(UserContext);
+
   const onFormSubmit = async (credentails, action) => {
     action.setSubmitting(true);
 

@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
-const NavBar = ({ user }) => {
+import { UserContext } from '../../Context/UserContext';
+
+const NavBar = () => {
+  const { user } = useContext(UserContext);
+
   const renderNavLink = user.authenticated ? (
     <React.Fragment>
       <NavLink to="/inbox" className="ui item">

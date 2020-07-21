@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useEffect } from 'react';
+
+import { UserContext } from '../../Context/UserContext';
 
 import authService from '../../apis/auth';
 
-const Signout = ({ signout, history }) => {
+const Signout = ({ history }) => {
+  const { signout } = useContext(UserContext);
+
   useEffect(() => {
     (async () => {
       await authService.post('/auth/signout', {});

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 
 import authService from '../../apis/auth';
+import { UserContext } from '../../Context/UserContext';
+
 import Input from '../../Components/Shared/Input/Input';
 
 const validationSchema = yup.object({
@@ -10,20 +12,26 @@ const validationSchema = yup.object({
   password: yup.string().required(),
 });
 
-const Signin = ({ authenticate, history }) => {
+const Signin = ({ history }) => {
+  const { authenticate } = useContext(UserContext);
+
+  const onSubmit = async (credentails, action) => {
+    action.setSubmitting(true);
+
+    const { data } = await authService.post('/auth/signin', credentails);
+    authenticate(data);
+
+    action.setSubmitting(false);
+    history.push('/inbox');
+  };
+
   return (
     <div>
       <h3>Sign In</h3>
       <Formik
         initialValues={{ username: '', password: '' }}
         validationSchema={validationSchema}
-        onSubmit={async (credentails, action) => {
-          action.setSubmitting(true);
-          const { data } = await authService.post('/auth/signin', credentails);
-          authenticate(data);
-          action.setSubmitting(false);
-          history.push('/inbox');
-        }}>
+        onSubmit={onSubmit}>
         {({ isSubmitting, values, errors }) => (
           <Form className="ui form">
             <Input label="Username" type="text" id="username" name="username" />

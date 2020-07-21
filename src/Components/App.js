@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import AuthService from '../apis/auth';
+import { UserContext } from '../Context/UserContext';
 
 import NavBar from './NavBar/NavBar';
 import Signin from '../Pages/Signin/Signin';
@@ -11,17 +11,7 @@ import Inbox from '../Pages/Inbox/Inbox';
 import NotFound from '../Pages/NotFound/NotFound';
 
 const App = ({ history }) => {
-  const [user, setUser] = useState({
-    username: '',
-    authenticated: null,
-  });
-
-  useEffect(() => {
-    (async () => {
-      const { data } = await AuthService.get('/auth/signedin');
-      setUser(data);
-    })();
-  }, []);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     if (user.authenticated) {
@@ -29,46 +19,24 @@ const App = ({ history }) => {
     }
   }, [user.authenticated, history]);
 
-  const authenticate = ({ username }) => {
-    setUser({ username, authenticated: true });
-  };
-
-  const signout = () => {
-    setUser({ username: '', authenticated: false });
-  };
-
   return (
     <div className="ui container">
-      <NavBar user={user} />
+      <NavBar />
       <Switch>
-        <Route
-          path="/signup"
-          render={(routeProps) => (
-            <Signup {...routeProps} authenticate={authenticate} />
-          )}
-        />
-        <Route
-          path="/signout"
-          render={(routeProps) => <Signout {...routeProps} signout={signout} />}
-        />
+        <Route path="/signup" component={Signup} />
+        <Route path="/signout" component={Signout} />
         <Route
           path="/inbox"
           render={(routeProps) =>
             !user.authenticated ? (
               <Redirect to="/" />
             ) : (
-              <Inbox {...routeProps} user={user} />
+              <Inbox {...routeProps} />
             )
           }
         />
         <Route path="/not-found" component={NotFound} />
-        <Route
-          exact
-          path="/"
-          render={(routeProps) => (
-            <Signin {...routeProps} authenticate={authenticate} />
-          )}
-        />
+        <Route exact path="/" component={Signin} />
         <Redirect to="not-found" />
       </Switch>
     </div>

@@ -1,15 +1,19 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 
 import emailService from '../../apis/email';
+import { UserContext } from '../../Context/UserContext';
+
 import Modal from '../Shared/Modal/Modal';
 
-const InboxCreate = (props) => {
+const InboxCreate = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const { user } = useContext(UserContext);
+
   const email = useRef({
     to: '',
     subject: '',
     text: '',
-    from: `${props.user.username}@angular-email.com`,
+    from: `${user.username}@angular-email.com`,
   });
 
   const toggleModal = () => {
