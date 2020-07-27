@@ -1,26 +1,52 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useEffect, useReducer } from 'react';
 import authService from '../apis/auth';
 
-export const UserContext = createContext();
+const ACTIONS = {
+  AUTHENTICATE: 'AUTHENTICATE',
+  FETCH_DATA: 'FETCH_DATA',
+};
+
+const initialState = {
+  username: '',
+  authenticated: null,
+};
+
+const AppReducer = (state, action) => {
+  switch (action.type) {
+    case ACTIONS.AUTHENTICATE:
+      return { ...state, ...action.payload };
+
+    case ACTIONS.FETCH_DATA:
+      return { ...state, ...action.payload };
+
+    default:
+      return state;
+  }
+};
+
+export const UserContext = createContext(initialState);
 
 const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    username: '',
-    authenticated: null,
-  });
+  const [user, dispatch] = useReducer(AppReducer, initialState);
 
   useEffect(() => {
     authService.get('/auth/signedin').then(({ data }) => {
-      setUser(data);
+      dispatch({ type: ACTIONS.FETCH_DATA, payload: data });
     });
   }, []);
 
   const authenticate = ({ username }) => {
-    setUser({ username, authenticated: true });
+    dispatch({
+      type: ACTIONS.AUTHENTICATE,
+      payload: { username, authenticated: true },
+    });
   };
 
   const signout = () => {
-    setUser({ username: '', authenticated: false });
+    dispatch({
+      type: ACTIONS.AUTHENTICATE,
+      payload: { username: '', authenticated: false },
+    });
   };
 
   return (

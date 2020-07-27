@@ -27,7 +27,7 @@ const App = ({ history }) => {
         <Route path="/signout" component={Signout} />
         <Route
           path="/inbox"
-          render={(routeProps) =>
+          render={routeProps =>
             !user.authenticated ? (
               <Redirect to="/" />
             ) : (
