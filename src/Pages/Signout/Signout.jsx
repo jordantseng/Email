@@ -1,20 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { signOut } from '../../Actions';
 
-import { UserContext } from '../../Context/UserContext';
-
-import authService from '../../apis/auth';
-
-const Signout = ({ history }) => {
-  const { signout } = useContext(UserContext);
+const Signout = () => {
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
-      await authService.post('/auth/signout', {});
-      signout();
-      history.push('/');
+      dispatch(signOut());
     })();
-  }, [signout, history]);
+  }, [dispatch]);
 
   return <div>Signing out...</div>;
 };

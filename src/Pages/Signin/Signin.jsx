@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-
-import authService from '../../apis/auth';
-import { UserContext } from '../../Context/UserContext';
+import { useDispatch } from 'react-redux';
+import { signIn } from '../../Actions';
 
 import Input from '../../Components/Shared/Input/Input';
 
@@ -12,17 +11,14 @@ const validationSchema = yup.object({
   password: yup.string().required(),
 });
 
-const Signin = ({ history }) => {
-  const { authenticate } = useContext(UserContext);
+const Signin = () => {
+  const dispatch = useDispatch();
 
   const onSubmit = async (credentails, action) => {
     action.setSubmitting(true);
-
-    const { data } = await authService.post('/auth/signin', credentails);
-    authenticate(data);
-
-    action.setSubmitting(false);
-    history.push('/inbox');
+    await dispatch(signIn(credentails));
+    // ERROR: CHANGE STATE AFTER COMPONENT UNMOUNTED
+    // action.setSubmitting(false);
   };
 
   return (

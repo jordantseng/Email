@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import emailService from '../../apis/email';
-import '../../Components/InboxIndex/InboxIndex.css';
+import '../../Components/Inbox/InboxIndex.css';
 
 const InboxIndex = () => {
   const [emails, setEmails] = useState([]);
@@ -16,7 +16,7 @@ const InboxIndex = () => {
 
   return (
     <div className="ui celled list">
-      {emails.map((email) => (
+      {emails.map(email => (
         <div key={email.id} className="item">
           <NavLink to={`/inbox/${email.id}`}>
             <div className="content">

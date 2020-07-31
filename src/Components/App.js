@@ -1,7 +1,7 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-
-import { UserContext } from '../Context/UserContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { checkAuth } from '../Actions';
 
 import NavBar from './NavBar/NavBar';
 import Signin from '../Pages/Signin/Signin';
@@ -11,13 +11,18 @@ import Inbox from '../Pages/Inbox/Inbox';
 import NotFound from '../Pages/NotFound/NotFound';
 
 const App = ({ history }) => {
-  const { user } = useContext(UserContext);
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user.authenticated) {
-      history.push('/inbox');
-    }
-  }, [user.authenticated, history]);
+    (async () => {
+      await dispatch(checkAuth());
+
+      if (user.authenticated) {
+        history.push('/inbox');
+      }
+    })();
+  }, [user.authenticated, history, dispatch]);
 
   return (
     <div className="ui container">

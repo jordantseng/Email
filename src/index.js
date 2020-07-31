@@ -1,15 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import UserContextProvider from './Context/UserContext';
+import { Router, Route } from 'react-router-dom';
+import { createStore, applyMiddleware, compose } from 'redux';
+import reducers from './Reducers';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import history from './history';
 
 import App from './Components/App';
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
+
 ReactDOM.render(
-  <UserContextProvider>
-    <Router>
+  <Provider store={store}>
+    <Router history={history}>
       <Route component={App} />
     </Router>
-  </UserContextProvider>,
+  </Provider>,
   document.getElementById('root')
 );

@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
-
-import { UserContext } from '../../Context/UserContext';
+import { useSelector } from 'react-redux';
 
 const NavBar = () => {
-  const { user } = useContext(UserContext);
+  const user = useSelector(state => state.user);
 
   const renderNavLink = user.authenticated ? (
     <React.Fragment>
