@@ -2,8 +2,8 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 
-import Input from '../Input/Input';
-import Textarea from '../Textarea/Textarea';
+import Input from './Input';
+import Textarea from './Textarea';
 
 const validationSchema = yup.object({
   to: yup.string().email().required(),

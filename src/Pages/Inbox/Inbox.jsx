@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import InboxIndex from '../../Components/InboxIndex/InboxIndex';
-import InboxShow from '../../Components/InboxShow/InboxShow';
-import InboxCreate from '../../Components/InboxCreate/InboxCreate';
-import InboxPlaceholder from '../../Components/InboxPlaceholder/InboxPlaceholder';
+import InboxIndex from '../../Components/Inbox/InboxIndex';
+import InboxShow from '../../Components/Inbox/InboxShow';
+import InboxCreate from '../../Components/Inbox/InboxCreate';
+import InboxPlaceholder from '../../Components/Inbox/InboxPlaceholder';
 
 const Inbox = ({ user }) => {
   return (
@@ -14,14 +14,13 @@ const Inbox = ({ user }) => {
           <InboxCreate user={user} />
           <InboxIndex />
         </div>
-
         <div className="eleven wide column">
           <Switch>
-            <Route exact path="/inbox" component={InboxPlaceholder} />
             <Route
               path="/inbox/:id"
-              render={(routeProps) => <InboxShow {...routeProps} />}
+              render={routeProps => <InboxShow {...routeProps} />}
             />
+            <Route exact path="/inbox" component={InboxPlaceholder} />
           </Switch>
         </div>
       </div>

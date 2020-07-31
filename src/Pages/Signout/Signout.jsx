@@ -1,20 +1,21 @@
-import React from 'react';
-import { useEffect } from 'react';
-
+import React, { Component } from 'react';
 import authService from '../../apis/auth';
 
-const Signout = (props) => {
-  useEffect(() => {
-    async function signout() {
-      await authService.post('/auth/signout', {});
-      props.signout();
-      props.history.push('/');
-    }
+class Signout extends Component {
+  async componentDidMount() {
+    const { signout, history } = this.props;
 
+    const { status } = await authService.post('/signout', {});
     signout();
-  }, [props]);
 
-  return <div>Signing out...</div>;
-};
+    if (status === 200) {
+      history.push('/');
+    }
+  }
+
+  render() {
+    return <div>Signing out...</div>;
+  }
+}
 
 export default Signout;

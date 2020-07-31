@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from 'react-router-dom';
-
+import { Route, Switch, Redirect } from 'react-router-dom';
 import AuthService from '../apis/auth';
 
 import NavBar from './NavBar/NavBar';
@@ -21,7 +15,7 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    const { data } = await AuthService.get('/auth/signedin');
+    const { data } = await AuthService.get('/signedin');
     this.setState({ user: { ...data } });
 
     if (this.state.user.authenticated) {
@@ -42,42 +36,40 @@ class App extends Component {
 
     return (
       <div className="ui container">
-        <Router>
-          <NavBar user={user} />
-          <Switch>
-            <Route
-              path="/signup"
-              render={(routeProps) => (
-                <Signup {...routeProps} authenticate={this.authenticate} />
-              )}
-            />
-            <Route
-              path="/signout"
-              render={(routeProps) => (
-                <Signout {...routeProps} signout={this.signout} />
-              )}
-            />
-            <Route
-              path="/inbox"
-              render={(routeProps) =>
-                !user.authenticated ? (
-                  <Redirect to="/" />
-                ) : (
-                  <Inbox {...routeProps} user={user} />
-                )
-              }
-            />
-            <Route path="/not-found" component={NotFound} />
-            <Route
-              exact
-              path="/"
-              render={(routeProps) => (
-                <Signin {...routeProps} authenticate={this.authenticate} />
-              )}
-            />
-            <Redirect to="not-found" />
-          </Switch>
-        </Router>
+        <NavBar user={user} />
+        <Switch>
+          <Route
+            path="/signup"
+            render={routeProps => (
+              <Signup {...routeProps} authenticate={this.authenticate} />
+            )}
+          />
+          <Route
+            path="/signout"
+            render={routeProps => (
+              <Signout {...routeProps} signout={this.signout} />
+            )}
+          />
+          <Route
+            path="/inbox"
+            render={routeProps =>
+              !user.authenticated ? (
+                <Redirect to="/" />
+              ) : (
+                <Inbox {...routeProps} user={user} />
+              )
+            }
+          />
+          <Route path="/not-found" component={NotFound} />
+          <Route
+            exact
+            path="/"
+            render={routeProps => (
+              <Signin {...routeProps} authenticate={this.authenticate} />
+            )}
+          />
+          <Redirect to="not-found" />
+        </Switch>
       </div>
     );
   }

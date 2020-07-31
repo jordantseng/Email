@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 
 import authService from '../../apis/auth';
-import Input from '../../Components/Shared/Input/Input';
+import Input from '../../Components/Shared/Input';
 
 const validationSchema = yup.object({
   username: yup.string().required(),
@@ -11,6 +11,8 @@ const validationSchema = yup.object({
 });
 
 class Signin extends Component {
+  initialValues = { username: '', password: '' };
+
   render() {
     const { authenticate, history } = this.props;
 
@@ -18,17 +20,21 @@ class Signin extends Component {
       <div>
         <h3>Sign In</h3>
         <Formik
-          initialValues={{ username: '', password: '' }}
+          initialValues={this.initialValues}
           validationSchema={validationSchema}
           onSubmit={async (credentails, action) => {
             action.setSubmitting(true);
-            const { data } = await authService.post(
-              '/auth/signin',
+
+            const { status, data } = await authService.post(
+              '/signin',
               credentails
             );
             authenticate(data);
+
             action.setSubmitting(false);
-            history.push('/inbox');
+            if (status === 200) {
+              history.push('/inbox');
+            }
           }}>
           {({ isSubmitting, values, errors }) => (
             <Form className="ui form">

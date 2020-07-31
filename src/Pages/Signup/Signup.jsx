@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-
 import authService from '../../apis/auth';
-import Input from '../../Components/Shared/Input/Input';
+
+import Input from '../../Components/Shared/Input';
 
 let timer = null;
-const validateUsername = (username) => {
+const validateUsername = username => {
   clearTimeout(timer);
 
   if (!username) {
@@ -15,7 +15,7 @@ const validateUsername = (username) => {
   return new Promise((resolve, reject) => {
     timer = setTimeout(() => {
       return authService
-        .post('/auth/username', {
+        .post('/username', {
           username,
         })
         .then(({ data }) => {
@@ -23,7 +23,7 @@ const validateUsername = (username) => {
             resolve(true);
           }
         })
-        .catch((error) => {
+        .catch(error => {
           resolve(false);
         });
     }, 500);
@@ -35,7 +35,7 @@ const validationSchema = yup.object({
     .string()
     .min(4)
     .required()
-    .test('checkDuplUsername', 'username alreday exists', (value) =>
+    .test('checkDuplUsername', 'username alreday exists', value =>
       validateUsername(value)
     ),
   password: yup.string().min(5).required(),
@@ -46,15 +46,22 @@ const validationSchema = yup.object({
 });
 
 class Signup extends Component {
+  initialValues = {
+    username: '',
+    password: '',
+    passwordConfirmation: '',
+  };
+
   onFormSubmit = async (credentails, action) => {
     const { authenticate, history } = this.props;
-    action.setSubmitting(true);
 
-    const { data } = await authService.post('/auth/signup', credentails);
+    action.setSubmitting(true);
+    const { status, data } = await authService.post('/signup', credentails);
     authenticate(data);
-    // ERROR: MEMORY LEAK DUE TO UPDATUNG STATE ON UNMOUNTED COMPONENT
-    // action.setSubmitting(false);
-    history.push('/inbox');
+
+    if (status === 200) {
+      history.push('/inbox');
+    }
   };
 
   render() {
@@ -62,11 +69,7 @@ class Signup extends Component {
       <div>
         <h3>Signup</h3>
         <Formik
-          initialValues={{
-            username: '',
-            password: '',
-            passwordConfirmation: '',
-          }}
+          initialValues={this.initialValues}
           validationSchema={validationSchema}
           onSubmit={this.onFormSubmit}>
           {({ values, errors, isSubmitting }) => {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-
 import emailService from '../../apis/email';
-import Modal from '../Shared/Modal/Modal';
+
+import Modal from '../Shared/Modal';
 
 class InboxCreate extends Component {
   state = {
@@ -19,8 +19,9 @@ class InboxCreate extends Component {
     this.setState({ modalOpen: !this.state.modalOpen });
   };
 
-  onEmailSubmitClick = async (formValues) => {
+  onEmailSubmitClick = async formValues => {
     const { data } = await emailService.post('/emails', formValues);
+
     if (data.status === 'success') {
       this.toggleModal();
     }
@@ -51,41 +52,3 @@ class InboxCreate extends Component {
   }
 }
 export default InboxCreate;
-
-// const InboxCreate = (props) => {
-//   const [modalOpen, setModalOpen] = useState(false);
-
-//   const email = {
-//     to: '',
-//     subject: '',
-//     text: '',
-//     from: `${props.user.username}@angular-email.com`,
-//   };
-
-//   const onEmailSubmitClick = async (formValues) => {
-//     const { data } = await emailService.post('/emails', formValues);
-//     if (data.status === 'success') {
-//       setModalOpen(false);
-//     }
-//   };
-
-//   const renderModal = modalOpen ? (
-//     <Modal
-//       title="Compose"
-//       setModalOpen={setModalOpen}
-//       email={email}
-//       onEmailSubmitClick={onEmailSubmitClick}
-//     />
-//   ) : null;
-
-//   return (
-//     <div>
-//       <button
-//         className="ui button inverted primary fluid"
-//         onClick={() => setModalOpen(true)}>
-//         Compoese
-//       </button>
-//       {renderModal}
-//     </div>
-//   );
-// };

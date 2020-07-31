@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import emailService from '../../apis/email';
-import Modal from '../Shared/Modal/Modal';
+import Modal from '../Shared/Modal';
 
 class InboxReply extends Component {
   state = {
@@ -33,7 +33,7 @@ class InboxReply extends Component {
     this.setState({ modalOpen: !this.state.modalOpen });
   };
 
-  onEmailSubmitClick = async (formValues) => {
+  onEmailSubmitClick = async formValues => {
     await emailService.post('/emails', formValues);
     this.toggleModal();
   };

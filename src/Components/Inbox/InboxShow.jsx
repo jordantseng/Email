@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import emailService from '../../apis/email';
-import InboxReply from '../InboxReply/InboxReply';
-import Loader from '../Shared/Loader/Loader';
-import '../InboxShow/InboxShow.css';
+import InboxReply from '../Inbox/InboxReply';
+import Loader from '../Shared/Loader';
+import './InboxShow.css';
 
 class InboxShow extends Component {
   state = {
@@ -14,33 +14,37 @@ class InboxShow extends Component {
       text: '',
       html: '',
     },
+    isLoading: null,
   };
-  isLoading = true;
 
-  async componentDidMount() {
+  componentDidMount() {
     this.fetchEmail();
   }
 
-  async componentDidUpdate(prevProps) {
-    this.isLoading = true;
+  componentDidUpdate(prevProps) {
     if (prevProps.location.pathname !== this.props.location.pathname) {
       this.fetchEmail();
     }
   }
 
   async fetchEmail() {
+    this.setState({ isLoading: true });
+
     const { data } = await emailService.get(
       `/emails/${this.props.match.params.id}`
     );
     const { subject, from, to, html, text } = data;
-    this.isLoading = false;
-    this.setState({ email: { subject, from, to, html, text } });
+
+    this.setState({
+      email: { subject, from, to, html, text },
+      isLoading: !this.state.isLoading,
+    });
   }
 
   render() {
-    const { email } = this.state;
+    const { email, isLoading } = this.state;
 
-    if (this.isLoading) {
+    if (isLoading) {
       return <Loader />;
     }
     return (
