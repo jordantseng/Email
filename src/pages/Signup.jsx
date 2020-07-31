@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-import authService from '../../apis/auth';
+import authService from '../apis/auth';
 
-import Input from '../../Components/Shared/Input';
+import Input from '../components/Shared/Input';
 
 let timer = null;
 const validateUsername = username => {

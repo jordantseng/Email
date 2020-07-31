@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import AuthService from '../apis/auth';
 
-import NavBar from './NavBar/NavBar';
-import Signin from '../Pages/Signin/Signin';
-import Signup from '../Pages/Signup/Signup';
-import Signout from '../Pages/Signout/Signout';
-import Inbox from '../Pages/Inbox/Inbox';
-import NotFound from '../Pages/NotFound/NotFound';
+import NavBar from './NavBar';
+import Signin from '../pages/Signin';
+import Signup from '../pages/Signup';
+import Signout from '../pages/Signout';
+import Inbox from '../pages/Inbox';
+import NotFound from '../pages/NotFound';
 
 class App extends Component {
   state = {

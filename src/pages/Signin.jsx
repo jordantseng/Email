@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 
-import authService from '../../apis/auth';
-import Input from '../../Components/Shared/Input';
+import authService from '../apis/auth';
+import Input from '../components/Shared/Input';
 
 const validationSchema = yup.object({
   username: yup.string().required(),

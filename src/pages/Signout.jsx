@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import authService from '../../apis/auth';
+import authService from '../apis/auth';
 
 class Signout extends Component {
   async componentDidMount() {
