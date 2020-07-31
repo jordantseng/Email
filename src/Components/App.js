@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import AuthService from '../apis/auth';
+import UserContext from '../context/UserContext';
 
 import NavBar from './NavBar';
 import Signin from '../pages/Signin';
@@ -35,42 +36,44 @@ class App extends Component {
     const { user } = this.state;
 
     return (
-      <div className="ui container">
-        <NavBar user={user} />
-        <Switch>
-          <Route
-            path="/signup"
-            render={routeProps => (
-              <Signup {...routeProps} authenticate={this.authenticate} />
-            )}
-          />
-          <Route
-            path="/signout"
-            render={routeProps => (
-              <Signout {...routeProps} signout={this.signout} />
-            )}
-          />
-          <Route
-            path="/inbox"
-            render={routeProps =>
-              !user.authenticated ? (
-                <Redirect to="/" />
-              ) : (
-                <Inbox {...routeProps} user={user} />
-              )
-            }
-          />
-          <Route path="/not-found" component={NotFound} />
-          <Route
-            exact
-            path="/"
-            render={routeProps => (
-              <Signin {...routeProps} authenticate={this.authenticate} />
-            )}
-          />
-          <Redirect to="not-found" />
-        </Switch>
-      </div>
+      <UserContext.Provider value={this.state}>
+        <div className="ui container">
+          <NavBar />
+          <Switch>
+            <Route
+              path="/signup"
+              render={routeProps => (
+                <Signup {...routeProps} authenticate={this.authenticate} />
+              )}
+            />
+            <Route
+              path="/signout"
+              render={routeProps => (
+                <Signout {...routeProps} signout={this.signout} />
+              )}
+            />
+            <Route
+              path="/inbox"
+              render={routeProps =>
+                !user.authenticated ? (
+                  <Redirect to="/" />
+                ) : (
+                  <Inbox {...routeProps} />
+                )
+              }
+            />
+            <Route path="/not-found" component={NotFound} />
+            <Route
+              exact
+              path="/"
+              render={routeProps => (
+                <Signin {...routeProps} authenticate={this.authenticate} />
+              )}
+            />
+            <Redirect to="not-found" />
+          </Switch>
+        </div>
+      </UserContext.Provider>
     );
   }
 }

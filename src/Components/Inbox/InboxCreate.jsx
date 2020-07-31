@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import emailService from '../../apis/email';
+import UserContext from '../../context/UserContext';
 
 import Modal from '../Shared/Modal';
 
@@ -8,11 +9,13 @@ class InboxCreate extends Component {
     modalOpen: false,
   };
 
+  static contextType = UserContext;
+
   email = {
     to: '',
     subject: '',
     text: '',
-    from: `${this.props.user.username}@angular-email.com`,
+    from: `${this.context.user.username}@angular-email.com`,
   };
 
   toggleModal = () => {

@@ -6,12 +6,12 @@ import InboxShow from '../components/Inbox/InboxShow';
 import InboxCreate from '../components/Inbox/InboxCreate';
 import InboxPlaceholder from '../components/Inbox/InboxPlaceholder';
 
-const Inbox = ({ user }) => {
+const Inbox = () => {
   return (
     <div>
       <div className="ui grid stackable">
         <div className="five wide column">
-          <InboxCreate user={user} />
+          <InboxCreate />
           <InboxIndex />
         </div>
         <div className="eleven wide column">
