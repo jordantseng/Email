@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import emailService from '../../apis/email';
-import '../../Components/Inbox/InboxIndex.css';
+import './InboxIndex.css';
 
 const InboxIndex = () => {
   const [emails, setEmails] = useState([]);

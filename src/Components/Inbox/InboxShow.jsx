@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 import emailService from '../../apis/email';
-import InboxReply from '../Inbox/InboxReply';
+import InboxReply from './InboxReply';
 import Loader from '../Shared/Loader/Loader';
-import '../Inbox/InboxShow.css';
+import './InboxShow.css';
 
 const InboxShow = ({ match }) => {
   const [loading, setLoading] = useState(true);

@@ -1,18 +1,19 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { signOut } from '../../Actions';
 
-const Signout = () => {
-  const dispatch = useDispatch();
+class Signout extends Component {
+  componentDidMount() {
+    this.props.signOut();
+  }
 
-  useEffect(() => {
-    (async () => {
-      dispatch(signOut());
-    })();
-  }, [dispatch]);
+  render() {
+    return <div>Signing out...</div>;
+  }
+}
 
-  return <div>Signing out...</div>;
+const mapDispatchToProps = {
+  signOut,
 };
 
-export default Signout;
+export default connect(null, mapDispatchToProps)(Signout);
