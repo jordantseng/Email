@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 
-import { UserContext } from '../../Context/UserContext';
+import { UserContext } from '../context/UserContext';
 
-import authService from '../../apis/auth';
-import Input from '../../Components/Shared/Input/Input';
+import authService from '../apis/auth';
+import Input from '../components/Shared/Input';
 
 let timer = null;
-const validateUsername = (username) => {
+const validateUsername = username => {
   clearTimeout(timer);
 
   if (!username) {
@@ -17,7 +17,7 @@ const validateUsername = (username) => {
   return new Promise((resolve, reject) => {
     timer = setTimeout(() => {
       return authService
-        .post('/auth/username', {
+        .post('/username', {
           username,
         })
         .then(({ data }) => {
@@ -25,7 +25,7 @@ const validateUsername = (username) => {
             resolve(true);
           }
         })
-        .catch((error) => {
+        .catch(error => {
           resolve(false);
         });
     }, 500);
@@ -37,7 +37,7 @@ const validationSchema = yup.object({
     .string()
     .min(4)
     .required()
-    .test('checkDuplUsername', 'username alreday exists', (value) =>
+    .test('checkDuplUsername', 'username alreday exists', value =>
       validateUsername(value)
     ),
   password: yup.string().min(5).required(),
@@ -53,7 +53,7 @@ const Signup = ({ history }) => {
   const onFormSubmit = async (credentails, action) => {
     action.setSubmitting(true);
 
-    const { data } = await authService.post('/auth/signup', credentails);
+    const { data } = await authService.post('/signup', credentails);
     authenticate(data);
     // ERROR: MEMORY LEAK DUE TO UPDATUNG STATE ON UNMOUNTED COMPONENT
     // action.setSubmitting(false);

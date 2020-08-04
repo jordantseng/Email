@@ -10,7 +10,7 @@ const UserContextProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    authService.get('/auth/signedin').then(({ data }) => {
+    authService.get('/signedin').then(({ data }) => {
       setUser(data);
     });
   }, []);
