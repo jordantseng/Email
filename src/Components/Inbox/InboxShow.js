@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import emailService from '../../apis/email';
 import InboxReply from './InboxReply';
-import Loader from '../Shared/Loader/Loader';
+import Loader from '../Shared/Loader';
 import './InboxShow.css';
 
 const InboxShow = ({ match }) => {

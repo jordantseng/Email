@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import emailService from '../../apis/email';
 
-import Modal from '../Shared/Modal/Modal';
+import Modal from '../Shared/Modal';
 
 const InboxCreate = () => {
   const [modalOpen, setModalOpen] = useState(false);

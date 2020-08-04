@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import { connect } from 'react-redux';
-import { signIn } from '../../Actions';
+import { signIn } from '../actions';
 
-import Input from '../../Components/Shared/Input/Input';
+import Input from '../components/Shared/Input';
 
 const validationSchema = yup.object({
   username: yup.string().required(),
   password: yup.string().required(),
 });
 
-// TODO: ERROR HANDLING WHEN ENTERING WRONG PASSWORD 
+// TODO: ERROR HANDLING WHEN ENTERING WRONG PASSWORD
 class Signin extends Component {
   initialValues = { username: '', password: '' };
 
