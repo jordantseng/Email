@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-
 import authService from '../apis/auth';
+import { UserContext } from '../context/UserContext';
+
 import Input from '../components/Shared/Input';
 
 const validationSchema = yup.object({
@@ -13,29 +14,28 @@ const validationSchema = yup.object({
 class Signin extends Component {
   initialValues = { username: '', password: '' };
 
-  render() {
-    const { authenticate, history } = this.props;
+  static contextType = UserContext;
 
+  onSubmitClick = async (credentails, action) => {
+    action.setSubmitting(true);
+
+    const { status, data } = await authService.post('/signin', credentails);
+    this.context.authenticate(data);
+
+    action.setSubmitting(false);
+    if (status === 200) {
+      this.props.history.push('/inbox');
+    }
+  };
+
+  render() {
     return (
       <div>
         <h3>Sign In</h3>
         <Formik
           initialValues={this.initialValues}
           validationSchema={validationSchema}
-          onSubmit={async (credentails, action) => {
-            action.setSubmitting(true);
-
-            const { status, data } = await authService.post(
-              '/signin',
-              credentails
-            );
-            authenticate(data);
-
-            action.setSubmitting(false);
-            if (status === 200) {
-              history.push('/inbox');
-            }
-          }}>
+          onSubmit={this.onSubmitClick}>
           {({ isSubmitting, values, errors }) => (
             <Form className="ui form">
               <Input

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import emailService from '../../apis/email';
-import UserContext from '../../context/UserContext';
+import { UserContext } from '../../context/UserContext';
 
 import Modal from '../Shared/Modal';
 

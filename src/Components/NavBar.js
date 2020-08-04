@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import UserContext from '../context/UserContext';
+import { UserContext } from '../context/UserContext';
 
 class NavBar extends Component {
   static contextType = UserContext;
-  
+
   renderNavLink() {
     return this.context.user.authenticated ? (
       <React.Fragment>

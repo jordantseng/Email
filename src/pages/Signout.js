@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import authService from '../apis/auth';
+import { UserContext } from '../context/UserContext';
 
 class Signout extends Component {
-  async componentDidMount() {
-    const { signout, history } = this.props;
+  static contextType = UserContext;
 
+  async componentDidMount() {
     const { status } = await authService.post('/signout', {});
-    signout();
+    this.context.signout();
 
     if (status === 200) {
-      history.push('/');
+      this.props.history.push('/');
     }
   }
 

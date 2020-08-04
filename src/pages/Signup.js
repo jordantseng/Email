@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import authService from '../apis/auth';
+import { UserContext } from '../context/UserContext';
 
 import Input from '../components/Shared/Input';
 
@@ -52,15 +53,15 @@ class Signup extends Component {
     passwordConfirmation: '',
   };
 
-  onFormSubmit = async (credentails, action) => {
-    const { authenticate, history } = this.props;
+  static contextType = UserContext;
 
+  onFormSubmit = async (credentails, action) => {
     action.setSubmitting(true);
     const { status, data } = await authService.post('/signup', credentails);
-    authenticate(data);
+    this.context.authenticate(data);
 
     if (status === 200) {
-      history.push('/inbox');
+      this.props.history.push('/inbox');
     }
   };
 
