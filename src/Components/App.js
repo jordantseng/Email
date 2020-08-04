@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import history from '../history';
 import AuthService from '../apis/auth';
 import UserContext from '../context/UserContext';
 
@@ -20,7 +21,7 @@ class App extends Component {
     this.setState({ user: { ...data } });
 
     if (this.state.user.authenticated) {
-      this.props.history.push('/inbox');
+      history.push('/inbox');
     }
   }
 
@@ -37,42 +38,44 @@ class App extends Component {
 
     return (
       <UserContext.Provider value={this.state}>
-        <div className="ui container">
-          <NavBar />
-          <Switch>
-            <Route
-              path="/signup"
-              render={routeProps => (
-                <Signup {...routeProps} authenticate={this.authenticate} />
-              )}
-            />
-            <Route
-              path="/signout"
-              render={routeProps => (
-                <Signout {...routeProps} signout={this.signout} />
-              )}
-            />
-            <Route
-              path="/inbox"
-              render={routeProps =>
-                !user.authenticated ? (
-                  <Redirect to="/" />
-                ) : (
-                  <Inbox {...routeProps} />
-                )
-              }
-            />
-            <Route path="/not-found" component={NotFound} />
-            <Route
-              exact
-              path="/"
-              render={routeProps => (
-                <Signin {...routeProps} authenticate={this.authenticate} />
-              )}
-            />
-            <Redirect to="not-found" />
-          </Switch>
-        </div>
+        <Router history={history}>
+          <div className="ui container">
+            <NavBar />
+            <Switch>
+              <Route
+                path="/signup"
+                render={routeProps => (
+                  <Signup {...routeProps} authenticate={this.authenticate} />
+                )}
+              />
+              <Route
+                path="/signout"
+                render={routeProps => (
+                  <Signout {...routeProps} signout={this.signout} />
+                )}
+              />
+              <Route
+                path="/inbox"
+                render={routeProps =>
+                  !user.authenticated ? (
+                    <Redirect to="/" />
+                  ) : (
+                    <Inbox {...routeProps} />
+                  )
+                }
+              />
+              <Route path="/not-found" component={NotFound} />
+              <Route
+                exact
+                path="/"
+                render={routeProps => (
+                  <Signin {...routeProps} authenticate={this.authenticate} />
+                )}
+              />
+              <Redirect to="not-found" />
+            </Switch>
+          </div>
+        </Router>
       </UserContext.Provider>
     );
   }
