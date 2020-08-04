@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import emailService from '../../apis/email';
-import InboxReply from '../Inbox/InboxReply';
+import InboxReply from './InboxReply';
 import Loader from '../Shared/Loader';
 import './InboxShow.css';
 
