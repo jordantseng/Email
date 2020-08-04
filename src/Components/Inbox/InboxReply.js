@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import emailService from '../../apis/email';
-import Modal from '../Shared/Modal/Modal';
+import Modal from '../Shared/Modal';
 
 const InboxReply = ({ email: loadedEmail }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -29,7 +29,7 @@ const InboxReply = ({ email: loadedEmail }) => {
     setModalOpen(!modalOpen);
   };
 
-  const onEmailSubmitClick = async (formValues) => {
+  const onEmailSubmitClick = async formValues => {
     await emailService.post('/emails', formValues);
     toggleModal();
   };

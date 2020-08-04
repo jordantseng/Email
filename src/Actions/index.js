@@ -1,4 +1,4 @@
-import * as actions from '../Actions/types';
+import * as actions from '../actions/types';
 import authService from '../apis/auth';
 import history from '../history';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import EmailForm from '../EmailForm/EmailForm';
+import EmailForm from '../Shared/EmailForm';
 
 const Modal = ({ title, email, toggleModal, onEmailSubmitClick }) => {
   return ReactDOM.createPortal(

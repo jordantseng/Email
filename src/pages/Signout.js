@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { signOut } from '../../Actions';
+import { signOut } from '../actions';
 
 const Signout = () => {
   const dispatch = useDispatch();

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-import authService from '../../apis/auth';
+import authService from '../apis/auth';
 import { useDispatch } from 'react-redux';
-import { signUp } from '../../Actions';
+import { signUp } from '../actions';
 
-import Input from '../../Components/Shared/Input/Input';
+import Input from '../components/Shared/Input';
 
 let timer = null;
 const validateUsername = username => {
