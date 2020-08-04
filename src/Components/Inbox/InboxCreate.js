@@ -1,9 +1,9 @@
 import React, { useState, useRef, useContext } from 'react';
 
 import emailService from '../../apis/email';
-import { UserContext } from '../../Context/UserContext';
+import { UserContext } from '../../context/UserContext';
 
-import Modal from '../Shared/Modal/Modal';
+import Modal from '../Shared/Modal';
 
 const InboxCreate = () => {
   const [modalOpen, setModalOpen] = useState(false);

@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useReducer } from 'react';
+import history from '../history';
 import authService from '../apis/auth';
 
 const ACTIONS = {
@@ -30,10 +31,16 @@ const UserContextProvider = ({ children }) => {
   const [user, dispatch] = useReducer(AppReducer, initialState);
 
   useEffect(() => {
-    authService.get('/auth/signedin').then(({ data }) => {
+    authService.get('/signedin').then(({ data }) => {
       dispatch({ type: ACTIONS.FETCH_DATA, payload: data });
     });
   }, []);
+
+  useEffect(() => {
+    if (user.authenticated) {
+      history.push('/inbox');
+    }
+  }, [user.authenticated]);
 
   const authenticate = ({ username }) => {
     dispatch({
