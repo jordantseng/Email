@@ -2,7 +2,8 @@ Simple single web page application made with create-react-app to experiment with
 
 1. class component (master)
 2. class component + contextAPI
-3. hook + contextAPI
-4. class component + redux
-5. hook + redux
+3. hook(useState) + contextAPI
+4. hook(useReducer) + contextAPI
+5. class component + redux
+6. hook + redux
 
