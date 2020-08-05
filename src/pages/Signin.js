@@ -13,30 +13,30 @@ const validationSchema = yup.object({
 class Signin extends Component {
   initialValues = { username: '', password: '' };
 
-  render() {
+  onSubmit = async (credentails, action) => {
     const { authenticate, history } = this.props;
+    action.setSubmitting(true);
 
+    try {
+      const { data } = await authService.post('/signin', credentails);
+      authenticate(data);
+      history.push('/inbox');
+    } catch (error) {
+      action.setSubmitting(false);
+      console.log(error);
+      // action.setStatus(error);
+    }
+  };
+
+  render() {
     return (
       <div>
         <h3>Sign In</h3>
         <Formik
           initialValues={this.initialValues}
           validationSchema={validationSchema}
-          onSubmit={async (credentails, action) => {
-            action.setSubmitting(true);
-
-            const { status, data } = await authService.post(
-              '/signin',
-              credentails
-            );
-            authenticate(data);
-
-            action.setSubmitting(false);
-            if (status === 200) {
-              history.push('/inbox');
-            }
-          }}>
-          {({ isSubmitting, values, errors }) => (
+          onSubmit={this.onSubmit}>
+          {({ isSubmitting, values, errors, status }) => (
             <Form className="ui form">
               <Input
                 label="Username"
@@ -57,6 +57,8 @@ class Signin extends Component {
                 disabled={isSubmitting}>
                 Submit
               </button>
+              {/* fuck  */}
+              {!!status && status}
 
               <pre>{JSON.stringify(values, null, 2)}</pre>
               <pre>{JSON.stringify(errors, null, 2)}</pre>
