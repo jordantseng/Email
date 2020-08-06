@@ -1,8 +1,8 @@
 # react-emailbox
 
-Simple single web page application made with create-react-app to experiment with serveral approaches in different branches.
+Simple single web page application made with create-react-app to experiment with serveral approaches of state sharing in different branches.
 
-# Branches
+## Branches
 
 1. props (master)
 2. contextAPI
@@ -11,4 +11,5 @@ Simple single web page application made with create-react-app to experiment with
 5. redux
 6. hook + redux
 
-# Notes
+## Notes
+WIP
