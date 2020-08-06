@@ -23,8 +23,8 @@ class Signin extends Component {
       history.push('/inbox');
     } catch (error) {
       action.setSubmitting(false);
-      console.log(error);
-      // action.setStatus(error);
+
+      action.setFieldError('general', 'invalid username or password!');
     }
   };
 
@@ -36,7 +36,7 @@ class Signin extends Component {
           initialValues={this.initialValues}
           validationSchema={validationSchema}
           onSubmit={this.onSubmit}>
-          {({ isSubmitting, values, errors, status }) => (
+          {({ isSubmitting, values, errors }) => (
             <Form className="ui form">
               <Input
                 label="Username"
@@ -57,8 +57,10 @@ class Signin extends Component {
                 disabled={isSubmitting}>
                 Submit
               </button>
-              {/* fuck  */}
-              {!!status && status}
+
+              {errors.general && (
+                <div className="ui red basic label">{errors.general}</div>
+              )}
 
               <pre>{JSON.stringify(values, null, 2)}</pre>
               <pre>{JSON.stringify(errors, null, 2)}</pre>
