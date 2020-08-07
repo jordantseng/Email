@@ -14,9 +14,12 @@ const validationSchema = yup.object({
 const Signin = () => {
   const dispatch = useDispatch();
 
+  const initialValues = { username: '', password: '' };
+
   const onSubmit = async (credentails, action) => {
     action.setSubmitting(true);
     await dispatch(signIn(credentails));
+    // TODO: ERROR HANDLING VIA MIDDLEWARE
     // ERROR: CHANGE STATE AFTER COMPONENT UNMOUNTED
     // action.setSubmitting(false);
   };
@@ -25,10 +28,10 @@ const Signin = () => {
     <div>
       <h3>Sign In</h3>
       <Formik
-        initialValues={{ username: '', password: '' }}
+        initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}>
-        {({ isSubmitting, values, errors }) => (
+        {({ isValid, isSubmitting, values, errors }) => (
           <Form className="ui form">
             <Input label="Username" type="text" id="username" name="username" />
             <Input
@@ -41,7 +44,7 @@ const Signin = () => {
             <button
               className="ui submit button primary"
               type="submit"
-              disabled={isSubmitting}>
+              disabled={!isValid || isSubmitting}>
               Submit
             </button>
 

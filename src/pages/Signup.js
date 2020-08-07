@@ -50,9 +50,16 @@ const validationSchema = yup.object({
 const Signup = () => {
   const dispatch = useDispatch();
 
-  const onFormSubmit = async (credentails, action) => {
+  const initialValues = {
+    username: '',
+    password: '',
+    passwordConfirmation: '',
+  };
+
+  const onFormSubmit = (credentails, action) => {
     action.setSubmitting(true);
-    await dispatch(signUp(credentails));
+    dispatch(signUp(credentails));
+    // TODO: ERROR HANDLING
     // ERROR: CHANGE STATE AFTER COMPONENT UNMOUNTED
     // action.setSubmitting(false);
   };
@@ -61,14 +68,10 @@ const Signup = () => {
     <div>
       <h3>Signup</h3>
       <Formik
-        initialValues={{
-          username: '',
-          password: '',
-          passwordConfirmation: '',
-        }}
+        initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={onFormSubmit}>
-        {({ values, errors, isSubmitting }) => {
+        {({ isValid, isSubmitting, values, errors }) => {
           return (
             <Form className="ui form">
               <Input
@@ -92,7 +95,7 @@ const Signup = () => {
               <button
                 className="ui submit button primary"
                 type="submit"
-                disabled={isSubmitting}>
+                disabled={!isValid || isSubmitting}>
                 Submit
               </button>
               <pre>{JSON.stringify(values, null, 2)}</pre>

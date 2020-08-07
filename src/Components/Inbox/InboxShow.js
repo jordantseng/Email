@@ -27,7 +27,7 @@ const InboxShow = ({ match }) => {
   }, [match.params.id]);
 
   if (loading) {
-    return <Loader />;
+    return <Loader text="Loading..." />;
   }
   return (
     <div>
