@@ -57,11 +57,14 @@ class Signup extends Component {
 
   onFormSubmit = async (credentails, action) => {
     action.setSubmitting(true);
-    const { status, data } = await authService.post('/signup', credentails);
-    this.context.authenticate(data);
 
-    if (status === 200) {
+    try {
+      const { data } = await authService.post('/signup', credentails);
+      this.context.authenticate(data);
       this.props.history.push('/inbox');
+    } catch (error) {
+      action.setSubmitting(false);
+      // error handling
     }
   };
 
@@ -73,7 +76,7 @@ class Signup extends Component {
           initialValues={this.initialValues}
           validationSchema={validationSchema}
           onSubmit={this.onFormSubmit}>
-          {({ values, errors, isSubmitting }) => {
+          {({ isValid, isSubmitting }) => {
             return (
               <Form className="ui form">
                 <Input
@@ -97,11 +100,9 @@ class Signup extends Component {
                 <button
                   className="ui submit button primary"
                   type="submit"
-                  disabled={isSubmitting}>
+                  disabled={!isValid || isSubmitting}>
                   Submit
                 </button>
-                <pre>{JSON.stringify(values, null, 2)}</pre>
-                <pre>{JSON.stringify(errors, null, 2)}</pre>
               </Form>
             );
           }}

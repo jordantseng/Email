@@ -45,7 +45,7 @@ class InboxShow extends Component {
     const { email, isLoading } = this.state;
 
     if (isLoading) {
-      return <Loader />;
+      return <Loader text="Loading..." />;
     }
     return (
       <div>

@@ -19,12 +19,14 @@ class Signin extends Component {
   onSubmitClick = async (credentails, action) => {
     action.setSubmitting(true);
 
-    const { status, data } = await authService.post('/signin', credentails);
-    this.context.authenticate(data);
-
-    action.setSubmitting(false);
-    if (status === 200) {
+    try {
+      const { data } = await authService.post('/signin', credentails);
+      
+      this.context.authenticate(data);
       this.props.history.push('/inbox');
+    } catch (error) {
+      action.setSubmitting(false);
+      action.setErrors({ general: 'invalid username or password' });
     }
   };
 
@@ -36,7 +38,7 @@ class Signin extends Component {
           initialValues={this.initialValues}
           validationSchema={validationSchema}
           onSubmit={this.onSubmitClick}>
-          {({ isSubmitting, values, errors }) => (
+          {({ isValid, isSubmitting, errors }) => (
             <Form className="ui form">
               <Input
                 label="Username"
@@ -54,12 +56,15 @@ class Signin extends Component {
               <button
                 className="ui submit button primary"
                 type="submit"
-                disabled={isSubmitting}>
+                disabled={!isValid || isSubmitting}>
                 Submit
               </button>
 
-              <pre>{JSON.stringify(values, null, 2)}</pre>
-              <pre>{JSON.stringify(errors, null, 2)}</pre>
+              {errors.general && (
+                <div style={{ marginTop: '12px' }}>
+                  <div className="ui red basic label">{errors.general}</div>
+                </div>
+              )}
             </Form>
           )}
         </Formik>
