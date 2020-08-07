@@ -18,6 +18,7 @@ Simple single web page application made with create-react-app to experiment with
 - Semantic UI
 - formik + yup (including async validation)
 - React portals (Modal)
+- redux + redux thunk
 
 
 
