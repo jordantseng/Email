@@ -57,6 +57,7 @@ class Signup extends Component {
   onFormSubmit = (credentails, action) => {
     action.setSubmitting(true);
     this.props.signUp(credentails);
+    // TODO: error handling via middleware
     // ERROR: CHANGE STATE AFTER COMPONENT UNMOUNTED
     // action.setSubmitting(false);
   };
@@ -69,7 +70,7 @@ class Signup extends Component {
           initialValues={this.initialValues}
           validationSchema={validationSchema}
           onSubmit={this.onFormSubmit}>
-          {({ values, errors, isSubmitting }) => {
+          {({ isValid, isSubmitting }) => {
             return (
               <Form className="ui form">
                 <Input
@@ -93,11 +94,9 @@ class Signup extends Component {
                 <button
                   className="ui submit button primary"
                   type="submit"
-                  disabled={isSubmitting}>
+                  disabled={!isValid || isSubmitting}>
                   Submit
                 </button>
-                {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
-                {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}
               </Form>
             );
           }}

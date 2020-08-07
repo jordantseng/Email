@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Loader = () => {
+const Loader = ({ text }) => {
   return (
-    <div className="ui segment h-100">
+    <div className="ui segment" style={{ height: '300px' }}>
       <div className="ui active inverted dimmer">
-        <div className="ui text loader">Loading</div>
+        <div className="ui text loader">{text}</div>
       </div>
       <p></p>
     </div>

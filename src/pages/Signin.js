@@ -11,7 +11,7 @@ const validationSchema = yup.object({
   password: yup.string().required(),
 });
 
-// TODO: ERROR HANDLING WHEN ENTERING WRONG PASSWORD
+// TODO: error handling by middle ware
 class Signin extends Component {
   initialValues = { username: '', password: '' };
 
@@ -30,7 +30,7 @@ class Signin extends Component {
           initialValues={this.initialValues}
           validationSchema={validationSchema}
           onSubmit={this.onSubmit}>
-          {({ isSubmitting, values, errors }) => (
+          {({ isValid, isSubmitting, values, errors }) => (
             <Form className="ui form">
               <Input
                 label="Username"
@@ -48,12 +48,12 @@ class Signin extends Component {
               <button
                 className="ui submit button primary"
                 type="submit"
-                disabled={isSubmitting}>
+                disabled={!isValid || isSubmitting}>
                 Submit
               </button>
 
-              {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
-              {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+              <pre>{JSON.stringify(values, null, 2)}</pre>
+              <pre>{JSON.stringify(errors, null, 2)}</pre>
             </Form>
           )}
         </Formik>

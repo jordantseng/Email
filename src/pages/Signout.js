@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signOut } from '../actions';
+import Loader from '../components/Shared/Loader';
 
 class Signout extends Component {
   componentDidMount() {
@@ -8,7 +9,7 @@ class Signout extends Component {
   }
 
   render() {
-    return <div>Signing out...</div>;
+    return <Loader text="Signing out..." />;
   }
 }
 
