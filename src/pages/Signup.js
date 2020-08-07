@@ -50,28 +50,31 @@ const validationSchema = yup.object({
 const Signup = ({ history }) => {
   const { authenticate } = useContext(UserContext);
 
+  const initialValues = {
+    username: '',
+    password: '',
+    passwordConfirmation: '',
+  };
+
   const onFormSubmit = async (credentails, action) => {
     action.setSubmitting(true);
-
-    const { data } = await authService.post('/signup', credentails);
-    authenticate(data);
-    // ERROR: MEMORY LEAK DUE TO UPDATUNG STATE ON UNMOUNTED COMPONENT
-    // action.setSubmitting(false);
-    history.push('/inbox');
+    try {
+      const { data } = await authService.post('/signup', credentails);
+      authenticate(data);
+      history.push('/inbox');
+    } catch (error) {
+      // error handling
+    }
   };
 
   return (
     <div>
       <h3>Signup</h3>
       <Formik
-        initialValues={{
-          username: '',
-          password: '',
-          passwordConfirmation: '',
-        }}
+        initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={onFormSubmit}>
-        {({ values, errors, isSubmitting }) => {
+        {({ isValid, isSubmitting }) => {
           return (
             <Form className="ui form">
               <Input
@@ -95,11 +98,9 @@ const Signup = ({ history }) => {
               <button
                 className="ui submit button primary"
                 type="submit"
-                disabled={isSubmitting}>
+                disabled={!isValid || isSubmitting}>
                 Submit
               </button>
-              <pre>{JSON.stringify(values, null, 2)}</pre>
-              <pre>{JSON.stringify(errors, null, 2)}</pre>
             </Form>
           );
         }}
