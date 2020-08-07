@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-
 import authService from '../apis/auth';
 import { UserContext } from '../context/UserContext';
 
@@ -18,11 +17,15 @@ const Signin = ({ history }) => {
   const onSubmit = async (credentails, action) => {
     action.setSubmitting(true);
 
-    const { data } = await authService.post('/signin', credentails);
-    authenticate(data);
-
-    action.setSubmitting(false);
-    history.push('/inbox');
+    try {
+      const { data } = await authService.post('/signin', credentails);
+      authenticate(data);
+      history.push('/inbox');
+    } catch (error) {
+      action.setSubmitting(false);
+      // error handling
+      action.setErrors({ general: 'invalid username or password' });
+    }
   };
 
   return (
@@ -32,7 +35,7 @@ const Signin = ({ history }) => {
         initialValues={{ username: '', password: '' }}
         validationSchema={validationSchema}
         onSubmit={onSubmit}>
-        {({ isSubmitting, values, errors }) => (
+        {({ isValid, isSubmitting, errors }) => (
           <Form className="ui form">
             <Input label="Username" type="text" id="username" name="username" />
             <Input
@@ -45,12 +48,15 @@ const Signin = ({ history }) => {
             <button
               className="ui submit button primary"
               type="submit"
-              disabled={isSubmitting}>
+              disabled={!isValid || isSubmitting}>
               Submit
             </button>
 
-            <pre>{JSON.stringify(values, null, 2)}</pre>
-            <pre>{JSON.stringify(errors, null, 2)}</pre>
+            {errors.general && (
+              <div style={{ marginTop: '12px' }}>
+                <div className="ui red basic label">{errors.general}</div>
+              </div>
+            )}
           </Form>
         )}
       </Formik>
