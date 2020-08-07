@@ -1,6 +1,8 @@
 # react-emailbox
 
-Simple single web page application made with create-react-app to experiment with serveral approaches of state sharing in different branches.
+Simple single web page application made with create-react-app to experiment with serveral approaches of state sharing in  different branches.
+
+---
 
 ## Branches
 
@@ -12,4 +14,11 @@ Simple single web page application made with create-react-app to experiment with
 6. hook + redux
 
 ## Notes
-WIP
+
+- Semantic UI
+- formik + yup (including async validation)
+- React portals (Modal)
+
+
+
+

@@ -1,16 +1,13 @@
 import React from 'react';
-import { useField, Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
+import ErrorText from './ErrorText';
 
-const Input = ({ label, id, ...props }) => {
-  const [field, meta] = useField(props);
-
+const Input = ({ label, id, name, ...props }) => {
   return (
     <div className="field">
       <label htmlFor={id}>{label}</label>
-      <Field {...field} {...props} />
-      {meta.error && meta.touched ? (
-        <div className="ui pointing red basic label">{meta.error}</div>
-      ) : null}
+      <Field id={id} name={name} {...props} />
+      <ErrorMessage name={name} component={ErrorText} />
     </div>
   );
 };

@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import authService from '../apis/auth';
+import Loader from '../components/Shared/Loader';
 
 class Signout extends Component {
   async componentDidMount() {
     const { signout, history } = this.props;
 
-    const { status } = await authService.post('/signout', {});
-    signout();
-
-    if (status === 200) {
+    try {
+      await authService.post('/signout', {});
+      signout();
       history.push('/');
+    } catch (error) {
+      // error handling
     }
   }
 
   render() {
-    return <div>Signing out...</div>;
+    return <Loader text="Signing out..." />;
   }
 }
 

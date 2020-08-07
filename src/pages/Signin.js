@@ -19,12 +19,12 @@ class Signin extends Component {
 
     try {
       const { data } = await authService.post('/signin', credentails);
+
       authenticate(data);
       history.push('/inbox');
     } catch (error) {
       action.setSubmitting(false);
-
-      action.setFieldError('general', 'invalid username or password!');
+      action.setErrors({ general: 'invalid username or password' });
     }
   };
 
@@ -36,7 +36,7 @@ class Signin extends Component {
           initialValues={this.initialValues}
           validationSchema={validationSchema}
           onSubmit={this.onSubmit}>
-          {({ isSubmitting, values, errors }) => (
+          {({ isValid, isSubmitting, errors }) => (
             <Form className="ui form">
               <Input
                 label="Username"
@@ -54,16 +54,16 @@ class Signin extends Component {
               <button
                 className="ui submit button primary"
                 type="submit"
-                disabled={isSubmitting}>
+                disabled={!isValid || isSubmitting}>
                 Submit
               </button>
 
+              {/* TODO: find a more elegant way to handle entire form error*/}
               {errors.general && (
-                <div className="ui red basic label">{errors.general}</div>
+                <div style={{ marginTop: '12px' }}>
+                  <div className="ui red basic label">{errors.general}</div>
+                </div>
               )}
-
-              <pre>{JSON.stringify(values, null, 2)}</pre>
-              <pre>{JSON.stringify(errors, null, 2)}</pre>
             </Form>
           )}
         </Formik>
