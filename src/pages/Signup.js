@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../context1/UserContext';
 
 import authService from '../apis/auth';
 import Input from '../components/Shared/Input';
