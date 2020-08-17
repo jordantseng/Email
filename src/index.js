@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import UserContextProvider from './context1/UserContext';
+import UserContextProvider from './context/UserContext';
 
 import App from './components/App';
 

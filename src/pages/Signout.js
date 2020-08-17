@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useEffect } from 'react';
 
-import { UserContext } from '../context1/UserContext';
+import { UserContext } from '../context/UserContext';
 
 import authService from '../apis/auth';
 import Loader from '../components/Shared/Loader';

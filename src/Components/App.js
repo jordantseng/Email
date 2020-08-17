@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import history from '../history';
-import { UserContext } from '../context1/UserContext';
+import { UserContext } from '../context/UserContext';
 
 import NavBar from './NavBar';
 import Signin from '../pages/Signin';

@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 
 import authService from '../apis/auth';
-import { UserContext } from '../context1/UserContext';
+import { UserContext } from '../context/UserContext';
 
 import Input from '../components/Shared/Input';
 
