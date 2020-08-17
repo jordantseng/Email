@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { connect } from 'react-redux';
 import { signIn } from '../actions';
 
-import Input from '../Components/Shared/Input';
+import Input from '../components/Shared/Input';
 
 const validationSchema = yup.object({
   username: yup.string().required(),

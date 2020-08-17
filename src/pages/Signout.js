@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signOut } from '../actions';
-import Loader from '../Components/Shared/Loader';
+import Loader from '../components/Shared/Loader';
 
 class Signout extends Component {
   componentDidMount() {
