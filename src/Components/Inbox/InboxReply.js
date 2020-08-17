@@ -17,7 +17,7 @@ const InboxReply = ({ email: loadedEmail }) => {
     const text = loadedEmail.text.replace(/\n/gi, '\n> ');
 
     email.current = {
-      ...loadedEmail.email,
+      ...loadedEmail,
       to: loadedEmail.from,
       from: loadedEmail.to,
       subject: `RE:${loadedEmail.subject}`,

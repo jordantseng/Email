@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { checkAuth } from '../actions';
 import history from '../history';
+import { checkAuth } from '../actions';
 
 import NavBar from './NavBar';
 import Signin from '../pages/Signin';

@@ -1,19 +1,18 @@
-import React, { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import emailService from '../../apis/email';
 
 import Modal from '../Shared/Modal';
 
-const InboxCreate = () => {
+const InboxCreate = ({ user }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const user = useSelector(state => state.user);
 
-  const email = useRef({
+  const email = {
     to: '',
     subject: '',
     text: '',
     from: `${user.username}@angular-email.com`,
-  });
+  };
 
   const toggleModal = () => {
     setModalOpen(!modalOpen);
@@ -30,7 +29,7 @@ const InboxCreate = () => {
     <Modal
       title="Compose"
       toggleModal={toggleModal}
-      email={email.current}
+      email={email}
       onEmailSubmitClick={onEmailSubmitClick}
     />
   ) : null;
@@ -47,4 +46,8 @@ const InboxCreate = () => {
   );
 };
 
-export default InboxCreate;
+const mapStateToProps = state => {
+  return { user: state.user };
+};
+
+export default connect(mapStateToProps)(InboxCreate);
