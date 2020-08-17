@@ -1,5 +1,5 @@
-import React, { useState } from './node_modules/react';
-import { connect } from './node_modules/react-redux';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import emailService from '../../apis/email';
 
 import Modal from '../Shared/Modal';

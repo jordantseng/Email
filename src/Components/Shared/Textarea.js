@@ -1,5 +1,5 @@
-import React from './node_modules/react';
-import { useField, Field } from './node_modules/formik';
+import React from 'react';
+import { useField, Field } from 'formik';
 
 const Textarea = ({ label, id, ...props }) => {
   const [field, meta] = useField(props);

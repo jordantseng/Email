@@ -1,5 +1,5 @@
-import React from './node_modules/react';
-import { Field, ErrorMessage } from './node_modules/formik';
+import React from 'react';
+import { Field, ErrorMessage } from 'formik';
 
 import ErrorText from './ErrorText';
 

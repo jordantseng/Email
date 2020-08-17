@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from './node_modules/react';
-import { NavLink } from './node_modules/react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import emailService from '../../apis/email';
 import './InboxIndex.css';

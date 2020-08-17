@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from './node_modules/react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import emailService from '../../apis/email';
 import Modal from '../Shared/Modal';
