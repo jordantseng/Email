@@ -1,4 +1,4 @@
-import * as actions from '../actionss/types';
+import * as actions from '../actions/types';
 
 const initialState = {
   username: '',

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { Component } from './node_modules/react';
+import { NavLink, Link } from './node_modules/react-router-dom';
+import { connect } from './node_modules/react-redux';
 
 class NavBar extends Component {
   renderNavLink() {

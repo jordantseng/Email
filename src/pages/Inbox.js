@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import InboxIndex from '../components/Inbox/InboxIndex';
-import InboxShow from '../components/Inbox/InboxShow';
-import InboxCreate from '../components/Inbox/InboxCreate';
-import InboxPlaceholder from '../components/Inbox/InboxPlaceholder';
+import InboxIndex from '../Components/Inbox/InboxIndex';
+import InboxShow from '../Components/Inbox/InboxShow';
+import InboxCreate from '../Components/Inbox/InboxCreate';
+import InboxPlaceholder from '../Components/Inbox/InboxPlaceholder';
 
 const Inbox = () => {
   return (

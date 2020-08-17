@@ -5,7 +5,7 @@ import authService from '../apis/auth';
 import { connect } from 'react-redux';
 import { signUp } from '../actions';
 
-import Input from '../components/Shared/Input';
+import Input from '../Components/Shared/Input';
 
 let timer = null;
 const validateUsername = username => {

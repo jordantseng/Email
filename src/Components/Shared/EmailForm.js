@@ -1,6 +1,6 @@
-import React from 'react';
-import { Formik, Form } from 'formik';
-import * as yup from 'yup';
+import React from './node_modules/react';
+import { Formik, Form } from './node_modules/formik';
+import * as yup from './node_modules/yup';
 
 import Input from './Input';
 import Textarea from './Textarea';
